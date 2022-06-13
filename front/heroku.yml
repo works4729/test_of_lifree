@@ -1,0 +1,11 @@
+setup:
+  config:
+    NODE_ENV: production
+build:
+  docker:
+    web: Dockerfile
+  config:
+    WORKDIR: app
+    API_URL: "https://test-in-lifree-api.herokuapp.com"
+run:
+  web: yarn run dev
