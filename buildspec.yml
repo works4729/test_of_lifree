@@ -1,0 +1,35 @@
+version: 0.2
+
+env:
+  parameter-store:
+    AWS_DEFAULT_REGION: ap-northeast-1
+    AWS_ACCOUNT_ID: 123456789
+    API_IMAGE: lifree-api
+    FRONT_IMAGE: lifree-front
+    DOCKERHUB_USER: mattyan4729
+    DOCKERHUB_PASS: ryota4729
+    WORKDIR: app
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - echo Logging in to Docker Hub...
+      - echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
+  build:
+    commands:
+      - docker build -t $API_IMAGE ./api
+      - docker push $API_IMAGE
+      - docker build -t $FRONT_IMAGE ./front
+      - docker push $FRONT_IMAGE
+  post_build:
+    commands:
+      - printf '[{"name":"api-container","imageUri":"%s"}]' $API_IMAGE > api_imagedefinitions.json
+      - printf '[{"name":"front-container","imageUri":"%s"}]' $FRONT_IMAGE > front_imagedefinitions.json
+artifacts:
+  files:
+    - api_imagedefinitions.json
+    - front_imagedefinitions.json
