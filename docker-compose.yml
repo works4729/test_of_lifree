@@ -25,7 +25,7 @@ services:
     command: /bin/sh -c "rm -f /app/tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0"
     environment:
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-      API_DOMAIN: "https://lifree.site"
+      API_DOMAIN: "https://test-of-bike-front.herokuapp.com/"
     volumes:
       - ./api:/$WORKDIR
       - api-bundle:/usr/local/bundle:cached
@@ -39,7 +39,7 @@ services:
       context: ./front
       args:
         WORKDIR: $WORKDIR
-        API_URL: "https://lifree.site:3000"
+        API_URL: "https://test-of-bike-api.herokuapp.com/"
         FRONT_URL: $FRONT_PORT
     command: yarn run dev
     volumes:

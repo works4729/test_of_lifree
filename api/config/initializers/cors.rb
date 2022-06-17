@@ -10,7 +10,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
         # origins ENV["API_DOMAIN"] || ""
         # origins ['https://lifree.site', 'http://localhost:8080']
         if Rails.env.production?
-          origins 'https://lifree.site'
+          origins 'https://test-of-bike-front.herokuapp.com'
         else
           origins 'http://localhost:8080'
         end

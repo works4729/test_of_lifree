@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     getMsg () {
-      this.$axios.$get('/hello')
+      this.$axios.$get('api/v1/hello')
         .then(res => this.msgs.push(res))
     }
   }

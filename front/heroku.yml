@@ -6,6 +6,6 @@ build:
     web: Dockerfile
   config:
     WORKDIR: app
-    API_URL: "https://test-in-lifree-api.herokuapp.com"
+    API_URL: "https://test-of-bike-api.herokuapp.com"
 run:
   web: yarn run dev
